@@ -1,10 +1,14 @@
-import getUsersPaginated from "./src/handler/get-users-paginated";
+import getUsers from "./src/handler/get-users";
+import getUsersXPaginated from "./src/handler/get-users-x-paginated";
 
 const server = Bun.serve({
   port: 3000,
   routes: {
     "/api/x/retweetby": {
-      GET: getUsersPaginated,
+      GET: getUsersXPaginated,
+    },
+    "/api/users": {
+      GET: getUsers,
     },
   },
 });

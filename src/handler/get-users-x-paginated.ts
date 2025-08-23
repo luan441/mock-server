@@ -1,5 +1,5 @@
-import { faker } from "@faker-js/faker";
 import type { User } from "../types/user";
+import userGenerate from "../generator/user-generator";
 
 const MAX_PAGES = 2;
 const RATE_LIMIT = 2500;
@@ -8,7 +8,7 @@ const windowSize = 1 * 60 * 1000; // 1 minute in milliseconds
 let windowStart = Date.now();
 let windowEnd = windowStart + windowSize;
 
-const getUsersPaginated = (): Response => {
+const getUsersXPaginated = (): Response => {
   const now = Date.now();
   if (now > windowEnd) {
     windowStart = now;
@@ -23,14 +23,7 @@ const getUsersPaginated = (): Response => {
 
   const users: User[] = [];
   for (let i = 0; i < 100; i++) {
-    const firstName = faker.person.firstName();
-    const lastName = faker.person.lastName();
-
-    users.push({
-      id: faker.number.int(),
-      name: faker.person.fullName({ firstName, lastName }),
-      username: faker.internet.username({ firstName, lastName }),
-    });
+    users.push(userGenerate());
   }
 
   const hasher = new Bun.CryptoHasher("sha1");
@@ -46,4 +39,4 @@ const getUsersPaginated = (): Response => {
   });
 };
 
-export default getUsersPaginated;
+export default getUsersXPaginated;
