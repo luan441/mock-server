@@ -6,6 +6,7 @@ const postGenerate = (): Post => {
     id: faker.number.int(),
     title: faker.lorem.sentence(),
     content: faker.lorem.paragraph({min: 1, max: 3 }),
+    createdAt: faker.date.past()
   };
 };
 
